@@ -7,14 +7,6 @@
     android:orientation="vertical"
     tools:context=".ui.fragment.FollowersFragment">
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress_follower"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:indeterminate="true"
-        style="?attr/progressBarStyle"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_follower"
         android:layout_width="match_parent"

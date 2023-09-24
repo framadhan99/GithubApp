@@ -29,10 +29,6 @@ class FollowersFragment : Fragment(R.layout.fragment_followers) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            binding.progressFollower.isVisible = it
-        }
-
         viewModel.errorMsg.observe(viewLifecycleOwner) { text ->
             Toast.makeText(requireActivity(), text, Toast.LENGTH_SHORT).show()
         }

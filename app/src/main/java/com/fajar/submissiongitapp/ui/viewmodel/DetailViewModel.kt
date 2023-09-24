@@ -12,12 +12,8 @@ import kotlinx.coroutines.launch
 class DetailViewModel(application: Application) : AndroidViewModel(application) {
     private val api = ApiService.create()
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
     private val _user = MutableLiveData<DetailResponse>()
     val user: LiveData<DetailResponse> = _user
-
 
     private val _username = MutableLiveData<String>()
     val username: LiveData<String> = _username
@@ -26,15 +22,11 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
     val errorMsg: LiveData<String> = _errorMsg
 
     fun getDetailUser(username: String) {
-        _isLoading.value = true
         try {
             viewModelScope.launch {
                 _user.value = api.getUser(username)
-                _isLoading.value = false
-                _errorMsg.value = "Successfully get detail user"
             }
         } catch (e: Exception) {
-            _isLoading.value = false
             _errorMsg.value = "Failed get detail User"
         }
     }
