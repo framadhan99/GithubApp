@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.fajar.submissiongitapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.fajar.submissiongitapp"
@@ -33,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -57,4 +60,6 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation ("com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.9")
+    implementation("io.coil-kt:coil:2.4.0")
 }

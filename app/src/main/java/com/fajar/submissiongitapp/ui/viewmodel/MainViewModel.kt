@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.fajar.submissiongitapp.core.api.ApiService
 import com.fajar.submissiongitapp.core.data.search.SearchUserResponse
-import com.fajar.submissiongitapp.core.data.user.UserResponse
+import com.fajar.submissiongitapp.core.data.UserResponse
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -32,18 +32,18 @@ class MainViewModel : ViewModel() {
         _isLoading.value = true
         try {
             viewModelScope.launch {
-                val res= api.getListOfUser()
-                _listUser.value =  res
+                val res = api.getListOfUser()
+                _listUser.value = res
                 _isLoading.value = false
                 _errorMsg.value = "Successfully get user"
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             _isLoading.value = false
-            _errorMsg.value = "${e.message.toString()}"
+            _errorMsg.value = "Failed get user"
         }
     }
 
-    fun searchUser(query: String){
+    fun searchUser(query: String) {
         try {
             viewModelScope.launch {
                 val searchResponse = api.searchUsers(query)
@@ -51,9 +51,9 @@ class MainViewModel : ViewModel() {
                 _isLoading.value = false
                 _errorMsg.value = "Successfully search to user"
             }
-        } catch (e:Exception){
+        } catch (e: Exception) {
             _isLoading.value = false
-            _errorMsg.value = "${e.message.toString()}"
+            _errorMsg.value = "Failed search user"
         }
     }
 }

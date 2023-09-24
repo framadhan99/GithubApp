@@ -24,13 +24,13 @@ class FollowerViewModel : ViewModel() {
         _isLoading.value = true
         try {
             viewModelScope.launch {
-                _listFollower.value = api.getUserFollowers(username)
+                _listFollower.value = api.fetchUserFollowers(username)
                 _isLoading.value = false
                 _errorMsg.value = "Successfully get user Followers"
             }
         } catch (e:Exception){
             _isLoading.value =false
-            _errorMsg.value = "${e.message.toString()}"
+            _errorMsg.value = "Failed get user Followers"
         }
     }
 }

@@ -1,60 +1,54 @@
 package com.fajar.submissiongitapp.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.fajar.submissiongitapp.R
+import com.fajar.submissiongitapp.adapter.FollowingAdapter
+import com.fajar.submissiongitapp.databinding.FragmentFollowingBinding
+import com.fajar.submissiongitapp.ui.activity.DetailActivity
+import com.fajar.submissiongitapp.ui.activity.DetailActivity.Companion.EXTRA_USERNAME_KEY
+import com.fajar.submissiongitapp.ui.viewmodel.DetailViewModel
+import com.fajar.submissiongitapp.ui.viewmodel.FollowingViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class FollowingFragment : Fragment(R.layout.fragment_following) {
+    private val binding by viewBinding(FragmentFollowingBinding::bind)
+    private val viewModel by activityViewModels<FollowingViewModel>()
+    private val detailViewModel by activityViewModels<DetailViewModel>()
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FollowingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class FollowingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            binding.progressFollowing.isVisible = it
         }
-    }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_following, container, false)
-    }
+        viewModel.errorMsg.observe(viewLifecycleOwner) { text ->
+            Toast.makeText(requireActivity(), text, Toast.LENGTH_SHORT).show()
+        }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FollowingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FollowingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        detailViewModel.username.observe(requireActivity()) { username ->
+            viewModel.getUserFollowing(username)
+        }
+
+        viewModel.listFollowing.observe(viewLifecycleOwner) { followingResponse ->
+            val adapter = FollowingAdapter(followingResponse)
+            val layoutManager = LinearLayoutManager(requireActivity())
+            binding.rvFollowing.adapter = adapter
+            binding.rvFollowing.layoutManager = layoutManager
+            adapter.followingItemClickListener = { followingResponseItem ->
+                val intent = Intent(requireActivity(), DetailActivity::class.java)
+                intent.putExtra(EXTRA_USERNAME_KEY, followingResponseItem.login)
+                startActivity(intent)
             }
+        }
     }
 }
