@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         setSearchbarMenu()
     }
 
-    private fun setSearchbarMenu() {
+    private fun setSearchbar() {
         with(binding) {
             searchView.setupWithSearchBar(binding.searchBar)
             searchView.editText.setOnEditorActionListener { _, _, _ ->
@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 false
             }
         }
-        mainViewModel.searchUser.observe(this) { searchRes ->
-            val adapter = SearchAdapter(searchRes)
+        mainViewModel.searchUser.observe(this) { searchResponse ->
+            val adapter = SearchAdapter(searchResponse)
             val layoutManager = LinearLayoutManager(this)
             binding.rvSearchUser.adapter = adapter
             binding.rvSearchUser.layoutManager = layoutManager
@@ -69,14 +69,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
     }
 
-    private fun setSearchbar() {
-        with(binding) {
-            searchView.setupWithSearchBar(binding.searchBar)
-            searchView.editText.setOnEditorActionListener { _, _, _ ->
-                val query = searchView.editText.text
-                mainViewModel.searchUser(query.toString())
-                false
+    private fun setSearchbarMenu() {
+        binding.searchBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.settings_menu -> {
+                    val settingsIntent = Intent(this@MainActivity, SettingActivity::class.java)
+                    startActivity(settingsIntent)
+                    true
+                }
+
+                R.id.favorite_menu -> {
+                    val favoriteIntent = Intent(this@MainActivity, FavoriteActivity::class.java)
+                    startActivity(favoriteIntent)
+                    true
+                }
+
+                else -> false
             }
         }
     }
+
 }
