@@ -11,9 +11,6 @@ import kotlinx.coroutines.launch
 class FollowerViewModel : ViewModel() {
     private val api = ApiService.create()
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
     private val _listFollower = MutableLiveData<FollowersResponse>()
     val listFollower: LiveData<FollowersResponse> = _listFollower
 
@@ -21,15 +18,11 @@ class FollowerViewModel : ViewModel() {
     val errorMsg: LiveData<String> = _errorMsg
 
     fun getFollowersUser(username: String){
-        _isLoading.value = true
         try {
             viewModelScope.launch {
                 _listFollower.value = api.fetchUserFollowers(username)
-                _isLoading.value = false
-                _errorMsg.value = "Successfully get user Followers"
             }
         } catch (e:Exception){
-            _isLoading.value =false
             _errorMsg.value = "Failed get user Followers"
         }
     }

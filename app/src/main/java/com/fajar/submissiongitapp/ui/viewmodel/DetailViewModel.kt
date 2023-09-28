@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class DetailViewModel(application: Application) : AndroidViewModel(application) {
+
     private val api = ApiService.create()
 
     private val database = UserDatabase.getInstance(application).userFavDao()
@@ -55,16 +56,15 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
     }
+
+   
+
     fun getDetailUser(username: String) {
-        _isLoading.value = true
         try {
             viewModelScope.launch {
                 _user.value = api.getUser(username)
-                _isLoading.value = false
-                _errorMsg.value = "Successfully get detail user"
             }
         } catch (e: Exception) {
-            _isLoading.value = false
             _errorMsg.value = "Failed get detail User"
         }
     }
