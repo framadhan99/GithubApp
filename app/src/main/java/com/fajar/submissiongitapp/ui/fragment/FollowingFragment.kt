@@ -27,6 +27,10 @@ class FollowingFragment : Fragment(R.layout.fragment_following) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            binding.progressFollowing.isVisible = it
+        }
+
         viewModel.errorMsg.observe(viewLifecycleOwner) { text ->
             Toast.makeText(requireActivity(), text, Toast.LENGTH_SHORT).show()
         }

@@ -71,6 +71,7 @@ class DetailActivity : AppCompatActivity(R.layout.activity_detail) {
             binding.textFollowingSize.text =
                 getString(R.string.following_count, detailRes.following)
             supportActionBar?.title = detailRes.login
+
             val userFavorite = UserFav(detailRes.login, detailRes.avatarUrl)
             insertOrDeleteUserFavorite(userFavorite)
             detailViewModel.getUserFavorite(detailRes.login)
