@@ -31,7 +31,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detail_toolbar"
+
         tools:src="@tools:sample/avatars" />
+
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/detail_text_name"
@@ -57,6 +59,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detail_text_name" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressbar_detail"
+        style="?attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toBottomOf="@id/detail_img_avatar"
+        app:layout_constraintEnd_toEndOf="@id/detail_img_avatar"
+        app:layout_constraintStart_toStartOf="@id/detail_img_avatar"
+        app:layout_constraintTop_toTopOf="@id/detail_img_avatar" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_follower_size"
@@ -110,6 +123,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="?attr/colorOnSurface" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

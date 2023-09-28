@@ -44,6 +44,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun searchUser(query: String) {
+        _isLoading.value = true
         try {
             viewModelScope.launch {
                 val searchResponse = api.searchUsers(query)

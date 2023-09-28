@@ -60,11 +60,15 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
    
 
     fun getDetailUser(username: String) {
+        _isLoading.value = true
         try {
             viewModelScope.launch {
                 _user.value = api.getUser(username)
+                _isLoading.value = false
+                _errorMsg.value = "Successfully get detail user"
             }
         } catch (e: Exception) {
+            _isLoading.value = false
             _errorMsg.value = "Failed get detail User"
         }
     }

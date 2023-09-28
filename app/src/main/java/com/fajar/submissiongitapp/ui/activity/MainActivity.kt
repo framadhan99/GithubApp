@@ -26,6 +26,9 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         mainViewModel.isLoading.observe(this) {
             binding.progressbarMain.isVisible = it
         }
+        mainViewModel.isLoading.observe(this) {
+            binding.progressSearch.isVisible = it
+        }
 
         mainViewModel.errorMsg.observe(this) { text ->
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show()

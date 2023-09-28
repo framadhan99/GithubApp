@@ -17,12 +17,19 @@ class FollowerViewModel : ViewModel() {
     private val _errorMsg = MutableLiveData<String>()
     val errorMsg: LiveData<String> = _errorMsg
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun getFollowersUser(username: String){
+        _isLoading.value = true
         try {
             viewModelScope.launch {
                 _listFollower.value = api.fetchUserFollowers(username)
+                _isLoading.value = false
+                _errorMsg.value = "Successfully get user Followers"
             }
         } catch (e:Exception){
+            _isLoading.value = false
             _errorMsg.value = "Failed get user Followers"
         }
     }

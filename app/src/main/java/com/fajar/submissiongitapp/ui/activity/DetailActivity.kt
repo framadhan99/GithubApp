@@ -36,9 +36,9 @@ class DetailActivity : AppCompatActivity(R.layout.activity_detail) {
 
         detailViewModel.setUsername(username)
 
-//        detailViewModel.isLoading.observe(this) {
-//            binding.progressbarDetail.isVisible = it
-//        }
+        detailViewModel.isLoading.observe(this) {
+            binding.progressbarDetail.isVisible = it
+        }
 
         detailViewModel.errorMsg.observe(this) { text ->
             Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
